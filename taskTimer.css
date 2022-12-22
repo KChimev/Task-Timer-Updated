@@ -1,0 +1,16 @@
+#time-taken{
+    width: 10em;
+    height: 1.6em;
+    font-size: 1.2em;
+    text-align: center;
+    margin-right: 1em;
+}
+#timer-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5em;
+}
