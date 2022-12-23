@@ -99,25 +99,41 @@ function start(){
         }
         for(let k=0;k<inputArr.length;k++){
         if(hoursObject.hasOwnProperty(inputArr[k])){
-            if(typeof inputArr[k-1]!="number"){
+            if(inputArr[k-2]=="и"){
                 inputArr[k-1]=parseInt(inputArr[k-1],10);
+                inputArr[k-3]=parseInt(inputArr[k-3],10);
+                arrHours=arrHours+inputArr[k-1]+inputArr[k-3];
             }
-            arrHours=arrHours+inputArr[k-1];
-            console.log(arrHours);
+            
+            if(typeof inputArr[k-1]=="number" && typeof inputArr[k-2]=="undefined"){
+                inputArr[k-1]=parseInt(inputArr[k-1],10);
+                arrHours=arrHours+inputArr[k-1];
+            }
         }
         if(minutesObject.hasOwnProperty(inputArr[k])){
-            if(typeof inputArr[k-1]!="number"){
+            if(inputArr[k-2]=="и"){
                 inputArr[k-1]=parseInt(inputArr[k-1],10);
+                inputArr[k-3]=parseInt(inputArr[k-3],10);
+                arrMinutes=arrMinutes+inputArr[k-1]+inputArr[k-3];
             }
-            arrMinutes=arrMinutes+inputArr[k-1];
-            console.log(arrMinutes);
+            
+            if(typeof inputArr[k-1]=="number" && typeof inputArr[k-2]=="undefined" || hoursObject.hasOwnProperty(inputArr[k-2])){
+                inputArr[k-1]=parseInt(inputArr[k-1],10);
+                arrMinutes=arrMinutes+inputArr[k-1];
+                console.log(arrMinutes);
+            }
         }
         if(secondsObject.hasOwnProperty(inputArr[k])){
-            if(typeof inputArr[k-1]!="number"){
+            if(typeof inputArr[k-1]=="number" && typeof inputArr[k-2]=="undefined" || minutesObject.hasOwnProperty(inputArr[k-2])){
                 inputArr[k-1]=parseInt(inputArr[k-1],10);
+                arrSeconds=arrSeconds+inputArr[k-1];
+                console.log(arrSeconds);
             }
-            arrSeconds=arrSeconds+inputArr[k-1];
-            console.log(arrSeconds);
+            if(inputArr[k-2]=="и"){
+                inputArr[k-1]=parseInt(inputArr[k-1],10);
+                inputArr[k-3]=parseInt(inputArr[k-3],10);
+                arrSeconds=arrSeconds+inputArr[k-1]+inputArr[k-3];
+            }
         }
         }
         userInput=arrHours+":"+arrMinutes+":"+arrSeconds;
