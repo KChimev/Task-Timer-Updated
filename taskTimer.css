@@ -14,3 +14,10 @@
     margin-right: auto;
     margin-top: 5em;
 }
+#radius-select{
+    width: 3em;
+     height: 1.9em;
+     font-size: 1.2em;
+     text-align: center;
+     margin-right: 1em;
+ }

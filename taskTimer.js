@@ -48,8 +48,24 @@ function start(){
        clearInterval(interval);
        interval=null;
        updateInterfaceControls();
+       var selectedRadius=document.getElementById("radius-select").value;
+       if(selectedRadius!="0"){
+         var zero=0;
+         var leftSecs=parseInt(timeArr[2],10);
+         timeArr[2]=zero.toString().padStart(2,"00");
+         var mins=parseInt(timeArr[1],10);
+         var leftMins=mins%selectedRadius+leftSecs/60;
+         if(leftMins>(selectedRadius/2)){
+            mins=mins-(mins%parseInt(selectedRadius,10))+parseInt(selectedRadius,10);
+         }
+         else if(leftMins<(selectedRadius/2)){
+            mins=mins-(mins%parseInt(selectedRadius,10));
+         }
+         timeArr[1]=mins.toString().padStart(2,"00");
+         updatePassedTime();
+         updateInterfaceTime();
     }
-
+    }
     function updateInterfaceTime(){
         var regex=/[,]/g;
         input.value=timeArr.toString().replace(regex,":");
@@ -99,41 +115,25 @@ function start(){
         }
         for(let k=0;k<inputArr.length;k++){
         if(hoursObject.hasOwnProperty(inputArr[k])){
-            if(inputArr[k-2]=="и"){
+            if(typeof inputArr[k-1]!="number"){
                 inputArr[k-1]=parseInt(inputArr[k-1],10);
-                inputArr[k-3]=parseInt(inputArr[k-3],10);
-                arrHours=arrHours+inputArr[k-1]+inputArr[k-3];
             }
-            
-            if(typeof inputArr[k-1]=="number" && typeof inputArr[k-2]=="undefined"){
-                inputArr[k-1]=parseInt(inputArr[k-1],10);
-                arrHours=arrHours+inputArr[k-1];
-            }
+            arrHours=arrHours+inputArr[k-1];
+            console.log(arrHours);
         }
         if(minutesObject.hasOwnProperty(inputArr[k])){
-            if(inputArr[k-2]=="и"){
+            if(typeof inputArr[k-1]!="number"){
                 inputArr[k-1]=parseInt(inputArr[k-1],10);
-                inputArr[k-3]=parseInt(inputArr[k-3],10);
-                arrMinutes=arrMinutes+inputArr[k-1]+inputArr[k-3];
             }
-            
-            if(typeof inputArr[k-1]=="number" && typeof inputArr[k-2]=="undefined" || hoursObject.hasOwnProperty(inputArr[k-2])){
-                inputArr[k-1]=parseInt(inputArr[k-1],10);
-                arrMinutes=arrMinutes+inputArr[k-1];
-                console.log(arrMinutes);
-            }
+            arrMinutes=arrMinutes+inputArr[k-1];
+            console.log(arrMinutes);
         }
         if(secondsObject.hasOwnProperty(inputArr[k])){
-            if(typeof inputArr[k-1]=="number" && typeof inputArr[k-2]=="undefined" || minutesObject.hasOwnProperty(inputArr[k-2])){
+            if(typeof inputArr[k-1]!="number"){
                 inputArr[k-1]=parseInt(inputArr[k-1],10);
-                arrSeconds=arrSeconds+inputArr[k-1];
-                console.log(arrSeconds);
             }
-            if(inputArr[k-2]=="и"){
-                inputArr[k-1]=parseInt(inputArr[k-1],10);
-                inputArr[k-3]=parseInt(inputArr[k-3],10);
-                arrSeconds=arrSeconds+inputArr[k-1]+inputArr[k-3];
-            }
+            arrSeconds=arrSeconds+inputArr[k-1];
+            console.log(arrSeconds);
         }
         }
         userInput=arrHours+":"+arrMinutes+":"+arrSeconds;
